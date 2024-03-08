@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RegisterLogController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +26,10 @@ Route::group(['prefix' => 'register'], function () {
     Route::put('/{id}', [RegisterController::class, 'update']);
     Route::delete('/{id}', [RegisterController::class, 'destroy']);
     Route::post('/{id}/restore', [RegisterController::class, 'restore']);
+});
+
+Route::group(['prefix' => 'redirects'], function () {
+    Route::get('/', [RegisterLogController::class, 'index']);
+    Route::get('/{redirect}/stats', [RegisterLogController::class, 'stats']);
+    Route::get('/{redirect}/log', [RegisterLogController::class, 'index']);
 });

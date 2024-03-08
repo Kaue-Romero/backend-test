@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RegisterLogController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,4 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/r/{token}', [RegisterController::class, 'index']);
+Route::get('/r/{redirect}', [RegisterLogController::class, 'index']);
