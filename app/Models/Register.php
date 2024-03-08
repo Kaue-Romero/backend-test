@@ -18,8 +18,13 @@ class Register extends Model
         'last_access'
     ];
 
-    protected $cast = [
-        'last_access' => 'datetime',
-        'status' => 'boolean'
+    protected $hidden = [
+        'id',
+        'deleted_at'
+    ];
+
+    protected $casts = [
+        'status' => 'boolean',
+        'last_access' => 'datetime'
     ];
 }
