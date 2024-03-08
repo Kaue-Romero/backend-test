@@ -14,11 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('register_log', function (Blueprint $table) {
-            $table->string('id')->primary()->notNullable()->unique();
+            $table->id();
             $table->string('ip');
             $table->string('user_agent');
-            $table->string('header');
-            $table->string('query_params');
+            $table->string('header')->nullable();
+            $table->string('query_params')->nullable();
+            $table->foreignId('redirect_id');
+            $table->foreign('redirect_id')->references('id')->on('register');
             $table->timestamps();
         });
     }
