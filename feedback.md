@@ -4,19 +4,19 @@ Esse documento visa coletar feedbacks sobre o teste de desenvolvimento. Desde o 
 ## Antes de Iniciar o Teste
 
 1 - Fale sobre suas primeiras impressões do Teste:
-> Resposta
+> Aparentemente um projeto bem simples com estruturas básicas. Implementação de biblioteca de terceiros, CRUD e adição de estatísticas.
 
 2 - Tempo estimado para o teste:
-> Resposta
+> 2 dias.
 
 3 - Qual parte você no momento considera mais difícil?
-> Resposta
+> No momento acredito que entender a ideia do projeto, pois a implementação do código não é problema.
 
 4 - Qual parte você no momento considera que levará mais tempo?
-> Resposta
+> Acredito que a parte de testes e validações.
 
 5 - Por onde você pretende começar?
-> Resposta
+> Prentendo começar instalando os pacotes e pela implementação do CRUD, pois acredito que é a parte mais simples.
 
 
 ## Após o Teste
