@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Register;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Vinkla\Hashids\Facades\Hashids;
 
@@ -51,7 +50,7 @@ class RegisterController extends Controller
     public function update(Request $request, $id)
     {
         $url = $request->url;
-        $status = $request->status;
+
 
         if ($url == null) {
             return response()->json('url is required', 400);
@@ -71,9 +70,14 @@ class RegisterController extends Controller
             return response()->json('register not found', 404);
         }
 
+        $status = $register->status;
+
+        if(isset($request->status)){
+            $status = $request->status;
+        }
+
         $register->url = $url;
-        $register->last_access = now();
-        $register->status =  $status == null ? true : 0;
+        $register->status = filter_var($status, FILTER_VALIDATE_BOOLEAN);
         $register->save();
 
         return response()->json($register, 200);
@@ -82,9 +86,17 @@ class RegisterController extends Controller
     public function destroy($id)
     {
         $register = Register::find($id);
-        $register->status = 'inativo';
+        $register->status = false;
         $register->save();
         $register->delete();
+    }
+
+    public function restore($id)
+    {
+        $register = Register::withTrashed()->find($id);
+        $register->status = true;
+        $register->save();
+        $register->restore();
     }
 
     private function siteStatus($url)
