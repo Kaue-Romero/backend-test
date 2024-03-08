@@ -27,4 +27,9 @@ class Register extends Model
         'status' => 'boolean',
         'last_access' => 'datetime'
     ];
+
+    public function logs()
+    {
+        return $this->hasMany(RegisterLog::class,'redirect_id','id');
+    }
 }

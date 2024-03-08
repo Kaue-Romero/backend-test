@@ -9,12 +9,22 @@ class RegisterLog extends Model
 {
     use HasFactory;
 
+    protected $table = 'register_log';
+
     protected $fillable = [
-        'id',
         'ip',
         'user_agent',
         'header',
         'query_params'
     ];
-    
+
+    protected $hidden = [
+        'id',
+        'redirect_id',
+    ];
+
+    public function register()
+    {
+        return $this->belongsTo(Register::class);
+    }
 }
