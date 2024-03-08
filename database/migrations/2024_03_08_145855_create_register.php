@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('code')->unique()->nullable();
             $table->dateTime('last_access')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
