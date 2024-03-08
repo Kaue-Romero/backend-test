@@ -24,4 +24,5 @@ Route::group(['prefix' => 'register'], function () {
     Route::post('/', [RegisterController::class, 'store']);
     Route::put('/{id}', [RegisterController::class, 'update']);
     Route::delete('/{id}', [RegisterController::class, 'destroy']);
+    Route::post('/{id}/restore', [RegisterController::class, 'restore']);
 });
