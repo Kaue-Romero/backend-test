@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group(['prefix' => 'register'], function () {
+    Route::get('/', [RegisterController::class, 'index']);
+    Route::post('/', [RegisterController::class, 'store']);
+    Route::put('/{id}', [RegisterController::class, 'update']);
+    Route::delete('/{id}', [RegisterController::class, 'destroy']);
 });
