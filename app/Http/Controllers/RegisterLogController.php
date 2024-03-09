@@ -29,18 +29,22 @@ class RegisterLogController extends Controller
     {
         $logs = Register::where('code', $redirect)->with('logs')->get();
 
-        $total = count($logs[0]->logs);
-        $unique = count($logs[0]->logs->groupBy('ip'));
+        if (count($logs) === 0) {
+            return response()->json(['error' => 'Invalid token'], 404);
+        }
 
-        $access = ['total' => $total, 'uniques' => $unique];
+        $logs[0]->redirects = $this->getAccessQuery($logs[0]->logs);
 
-        $logs[0]->redirects = $access;
-        $logs[0]->top_referer = $logs[0]->logs->groupBy('header')->map(function ($item, $key) {
-            return [
-                'header' => $key,
-                'count' => count($item)
-            ];
-        })->sortDesc()->values()->first();
+        $logs[0]->top_referer = $this->getTopReferer($logs[0]->logs);
+
+        $logs[0]->last_10_days = $this->getLast10Days($logs[0]->logs);
+
+        return response()->json($logs);
+    }
+
+    public function logs(Request $_request, $redirect)
+    {
+        $logs = Register::where('code', $redirect)->with('logs')->get();
 
         return response()->json($logs);
     }
@@ -79,5 +83,33 @@ class RegisterLogController extends Controller
         }
 
         return $queryString;
+    }
+
+    private function getAccessQuery($logs)
+    {
+        $total = count($logs);
+        $unique = count($logs->groupBy('ip'));
+        return ['total' => $total, 'uniques' => $unique];
+    }
+
+    private function getTopReferer($logs)
+    {
+        $topReferer = $logs->groupBy('header')->map(function ($item, $key) {
+            return ['referer' => $key, 'total' => count($item)];
+        })->sortByDesc('total')->values()->first();
+
+        return $topReferer;
+    }
+
+    private function getLast10Days($logs)
+    {
+        //Uma array com total de acessos dos últimos 10 dias (Ex: [{ "date": "2021-01-01": "total": 10, "unique": 8 }]) with where date > now() - 10
+        $last10Days = $logs->where('created_at', '>', now()->subDays(10))->groupBy(function ($item) {
+            return $item->created_at->format('Y-m-d');
+        })->map(function ($item, $key) {
+            return ['date' => $key, 'total' => count($item), 'unique' => count($item->groupBy('ip'))];
+        })->values();
+
+        return $last10Days;
     }
 }
