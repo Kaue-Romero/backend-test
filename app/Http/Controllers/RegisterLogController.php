@@ -82,6 +82,27 @@ class RegisterLogController extends Controller
             $queryString .= '?' . $requestString;
         }
 
+        //get the params from the query string
+        $queryParams = explode('?', $queryString)[1];
+        $queryParams = explode('&', $queryParams);
+
+        $requestParams = explode('&', $requestString);
+
+        foreach ($queryParams as $key => $value) {
+            $param = explode('=', $value);
+            foreach ($requestParams as $requestParam) {
+                $requestParam = explode('=', $requestParam);
+                if ($param[0] === $requestParam[0]) {
+                    $param[1] = $requestParam[1];
+                }
+            }
+            $queryParams[$key] = implode('=', $param);
+        }
+
+        $queryParams = array_unique($queryParams);
+
+        $queryString = explode('?', $queryString)[0] . '?' . implode('&', $queryParams);
+
         return $queryString;
     }
 
