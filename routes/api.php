@@ -31,5 +31,5 @@ Route::group(['prefix' => 'register'], function () {
 Route::group(['prefix' => 'redirects'], function () {
     Route::get('/', [RegisterLogController::class, 'index']);
     Route::get('/{redirect}/stats', [RegisterLogController::class, 'stats']);
-    Route::get('/{redirect}/log', [RegisterLogController::class, 'index']);
+    Route::get('/{redirect}/logs', [RegisterLogController::class, 'logs']);
 });
