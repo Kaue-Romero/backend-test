@@ -22,6 +22,20 @@ class RegisterController extends Controller
             return $this->validateUrl($url);
         }
 
+        $url_parts = parse_url($url);
+        if (isset($url_parts['query'])) {
+            $params = explode('&', $url_parts['query']);
+            foreach ($params as $param) {
+                $item = explode('=', $param);
+                if($item[1] == "") {
+                    //strpos of the param
+                    $pos = strpos($url, $param);
+                    //remove the param from the url plus a "&"
+                    $url = substr_replace($url, '', $pos, strlen($param) + 1);
+                }
+            }
+        }
+
         if ($this->siteStatus($url) != null) {
             return $this->siteStatus($url);
         }
@@ -72,7 +86,7 @@ class RegisterController extends Controller
 
         $status = $register->status;
 
-        if(isset($request->status)){
+        if (isset($request->status)) {
             $status = $request->status;
         }
 
@@ -108,7 +122,10 @@ class RegisterController extends Controller
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
         $httpcode = (string) $httpcode;
-        if ($httpcode != 200) {
+        if ($httpcode === "0") {
+            return response()->json('ERROR: DNS problem', 400);
+        }
+        if ($httpcode != "200") {
             return response()->json('ERROR: site is down or redirecting with code ' . $httpcode, 400);
         }
 
