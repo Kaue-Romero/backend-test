@@ -28,10 +28,7 @@ class RegisterController extends Controller
             foreach ($params as $param) {
                 $item = explode('=', $param);
                 if($item[1] == "") {
-                    //strpos of the param
-                    $pos = strpos($url, $param);
-                    //remove the param from the url plus a "&"
-                    $url = substr_replace($url, '', $pos, strlen($param) + 1);
+                    return response()->json('ERROR: invalid url, query param empty', 400);
                 }
             }
         }
