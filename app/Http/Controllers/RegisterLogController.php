@@ -72,6 +72,10 @@ class RegisterLogController extends Controller
 
     private function checkForExistantQueryString($queryString, $requestString)
     {
+        if(!$requestString) {
+            return $queryString;
+        }
+
         if (strpos($queryString, '?') !== false) {
             if (substr($queryString, -1) !== '?') {
                 $queryString .= '&' . $requestString;
