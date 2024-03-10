@@ -22,16 +22,20 @@ Esse documento visa coletar feedbacks sobre o teste de desenvolvimento. Desde o 
 ## Após o Teste
 
 1 - O que você achou do teste?
-> Resposta
+> O teste é muito bom, pois é um projeto que envolve muitas coisas que são utilizadas no dia a dia de um desenvolvedor. Acredito que o teste é bem completo e abrange muitas coisas, apesar de simples.
 
 2 - Levou mais ou menos tempo do que você esperava?
-> Resposta
+> Levou o tempo que eu esperava, 2 dias. Acredito que o tempo foi bem distribuido e usei o segundo dia para lapidar o projeto.
 
 3 - Teve imprevistos? Quais?
-> Resposta
+> Não teve muitos imprevistos, apenas a parte de testes que tive que pesquisar um pouco mais.
 
 4 - Existem pontos que você gostaria de ter melhorado?
-> Resposta
+> Gostaria de ter melhorado a parte de testes, pois acredito que ficou bem simples e também melhorar a parte de validações das URLs para prevenir ataques de SQL Injection ou inserção de caracteres especiais.
 
 5 - Quais falhas você encontrou na estrutura do projeto?
-> Resposta
+> Acredito que na reutilização de código, pois acredito que poderia ter feito um código mais acessível fora do escopo das classes.
+
+finalizado em 09/03/2024 às 23:05
+
+
