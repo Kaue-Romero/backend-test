@@ -176,6 +176,8 @@ Usando o PHPUnit, crie testes unitários e de integração para a API
 | Priorizando à Request                  | `utm_source=instagram`          | `utm_source=facebook&utm_campaign=ads` | `utm_source=instagram&utm_campaign=ads` |
 | Merge ignorando chave vazia na Request | `utm_source=&utm_campaign=test` | `utm_source=facebook`                  | `utm_source=facebook&utm_campaign=test` |
 
+![Captura de tela de 2024-03-09 22-59-08](https://github.com/Kaue-Romero/backend-test/assets/69368947/d131d553-5819-42a2-a18d-b2ec602d8da5)
+
 ---
 
 ## Critérios de Avaliação
