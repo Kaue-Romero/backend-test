@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\RegisterController_Helpers\Helpers;
 use App\Models\Register;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -9,6 +10,13 @@ use Vinkla\Hashids\Facades\Hashids;
 
 class RegisterController extends Controller
 {
+    public $helpers;
+
+    public function __construct()
+    {
+        $this->helpers = new Helpers();
+    }
+
     public function index()
     {
         return Register::all();
@@ -18,8 +26,8 @@ class RegisterController extends Controller
     {
         $url = $request->url;
 
-        if ($this->validateUrl($url) != null) {
-            return $this->validateUrl($url);
+        if ($this->helpers->validateUrl($url) != null) {
+            return $this->helpers->validateUrl($url);
         }
 
         $url_parts = parse_url($url);
@@ -33,8 +41,8 @@ class RegisterController extends Controller
             }
         }
 
-        if ($this->siteStatus($url) != null) {
-            return $this->siteStatus($url);
+        if ($this->helpers->siteStatus($url) != null) {
+            return $this->helpers->siteStatus($url);
         }
 
         $validateData = new Validator();
@@ -67,12 +75,12 @@ class RegisterController extends Controller
             return response()->json('url is required', 400);
         }
 
-        if ($this->validateUrl($url) != null) {
-            return $this->validateUrl($url);
+        if ($this->helpers->validateUrl($url) != null) {
+            return $this->helpers->validateUrl($url);
         }
 
-        if ($this->siteStatus($url) != null) {
-            return $this->siteStatus($url);
+        if ($this->helpers->siteStatus($url) != null) {
+            return $this->helpers->siteStatus($url);
         }
 
         $register = Register::find($id);
@@ -110,39 +118,5 @@ class RegisterController extends Controller
         $register->restore();
     }
 
-    private function siteStatus($url)
-    {
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_NOBODY, true);
-        curl_exec($ch);
-        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-        $httpcode = (string) $httpcode;
-        if ($httpcode === "0") {
-            return response()->json('ERROR: DNS problem', 400);
-        }
-        if ($httpcode != "200") {
-            return response()->json('ERROR: site is down or redirecting with code ' . $httpcode, 400);
-        }
 
-        return null;
-    }
-
-    private function validateUrl($url)
-    {
-        if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) {
-            return response()->json('ERROR: insert a valid url', 400);
-        }
-
-        if (strpos($url, env('APP_URL')) !== false) {
-            return response()->json('ERROR: Do not insert the APP url', 400);
-        }
-
-        if (strpos($url, 'https://') === false) {
-            return response()->json('ERROR: insert a https url', 400);
-        }
-
-        return null;
-    }
 }
