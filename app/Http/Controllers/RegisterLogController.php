@@ -33,17 +33,17 @@ class RegisterLogController extends Controller
 
     public function stats(Request $_request, $redirect)
     {
-        $logs = Register::where('code', $redirect)->with('logs')->get();
+        $logs = Register::where('code', $redirect)->with('logs')->first();
 
-        if (count($logs) === 0) {
+        if (empty($logs)) {
             return response()->json(['error' => 'Invalid token'], 404);
         }
 
-        $logs[0]->redirects = $this->helpers->getAccessQuery($logs[0]->logs);
+        $logs->redirects = $this->helpers->getAccessQuery($logs->logs);
 
-        $logs[0]->top_referer = $this->helpers->getTopReferer($logs[0]->logs);
+        $logs->top_referer = $this->helpers->getTopReferer($logs->logs);
 
-        $logs[0]->last_10_days = $this->helpers->getLast10Days($logs[0]->logs);
+        $logs->last_10_days = $this->helpers->getLast10Days($logs->logs);
 
         return response()->json($logs);
     }
