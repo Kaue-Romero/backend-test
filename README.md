@@ -213,7 +213,7 @@ Usando o PHPUnit, crie testes unitários e de integração para a API
 -   Troque as variáveis de ambiente do arquivo `.env` para as suas configurações locais
 -   IMPORTANTE: A variável `DB_HOST` deve ser `database` para funcionar com o Docker pois o nome do container que roda o MySQL é `database`. O usuário não pode ser `root` e a senha não pode ser nula.
 -   Execute o comando `docker-compose up -d` para subir o ambiente
--   Execute o comando `docker-compose exec app chown -R otimize .` para corrigir as permissões da pasta para o usuário criado `otimize`
+-   Caso esteja em um ambiente local Linux, execute o comando `docker-compose exec app chown -R otimize .` para corrigir as permissões da pasta para o usuário criado `otimize`
 -   Execute o comando `docker-compose exec app composer install` para instalar as dependências do projeto
 -   Execute o comando `docker-compose exec app php artisan key:generate` para gerar a chave da aplicação
 -   IMPORTANTE: Espere o MySQL subir para executar o próximo comando, aproximadamente 10 minutos
