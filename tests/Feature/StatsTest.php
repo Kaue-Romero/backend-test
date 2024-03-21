@@ -50,8 +50,8 @@ class StatsTest extends TestCase
 
         $response = $this->get("/api/redirects/" . $register->json("code") . "/stats")->json();
 
-        $this->assertEquals(6, $response[0]["redirects"]["uniques"]);
-        $this->assertEquals(10, $response[0]["redirects"]["total"]);
+        $this->assertEquals(6, $response["redirects"]["uniques"]);
+        $this->assertEquals(10, $response["redirects"]["total"]);
     }
 
     public function test_last_10_days_access()
@@ -62,8 +62,8 @@ class StatsTest extends TestCase
 
         $response = $this->get("/api/redirects/" . $register->json("code") . "/stats")->json();
 
-        $this->assertArrayHasKey("last_10_days", $response[0]);
-        $this->assertEquals(0, count($response[0]["last_10_days"]));
+        $this->assertArrayHasKey("last_10_days", $response);
+        $this->assertEquals(0, count($response["last_10_days"]));
     }
 
     public function test_last_10_days_access_with_logs()
@@ -90,8 +90,8 @@ class StatsTest extends TestCase
 
         $response = $this->get("/api/redirects/" . $register->json("code") . "/stats")->json();
 
-        $this->assertArrayHasKey("last_10_days", $response[0]);
-        $this->assertEquals(1, count($response[0]["last_10_days"]));
+        $this->assertArrayHasKey("last_10_days", $response);
+        $this->assertEquals(1, count($response["last_10_days"]));
     }
 
     public function test_last_10_days_is_correct_and_only_10_days()
@@ -111,9 +111,9 @@ class StatsTest extends TestCase
 
         $response = $this->get("/api/redirects/" . $register->json("code") . "/stats")->json();
 
-        $this->assertArrayHasKey("last_10_days", $response[0]);
+        $this->assertArrayHasKey("last_10_days", $response);
 
-        $this->assertEquals(10, count($response[0]["last_10_days"]));
+        $this->assertEquals(10, count($response["last_10_days"]));
     }
 
     public function test_headers_referer_count()
@@ -136,8 +136,8 @@ class StatsTest extends TestCase
 
         $response = $this->get("/api/redirects/" . $register->json("code") . "/stats")->json();
 
-        $this->assertArrayHasKey("top_referer", $response[0]);
-        $this->assertEquals("https://www.youtube.com", $response[0]["top_referer"]["referer"]);
-        $this->assertEquals(8, $response[0]["top_referer"]["total"]);
+        $this->assertArrayHasKey("top_referer", $response);
+        $this->assertEquals("https://www.youtube.com", $response["top_referer"]["referer"]);
+        $this->assertEquals(8, $response["top_referer"]["total"]);
     }
 }
