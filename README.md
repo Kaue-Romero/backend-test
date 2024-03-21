@@ -197,3 +197,24 @@ Usando o PHPUnit, crie testes unitários e de integração para a API
   com o projeto inicial
 - Não esqueça de preencher o arquivo `feedback.md` com suas considerações finais
 
+## Preparação do ambiente
+
+- Instale o PHP 8.0
+- Instale o Composer
+- Instale o Laravel
+- Instale o MySQL
+- Instale o Docker
+- Instale o Docker Compose
+
+## Inicialização do ambiente
+
+- Clone o repositório
+- Execute o comando `composer install` para instalar as dependências, caso não tenha o composer instalado, execute o comando `docker run --rm -v $(pwd):/app composer install`
+- Copie o arquivo `.env.example` para `.env`
+- Troque as variáveis de ambiente do arquivo `.env` para as suas configurações locais
+- IMPORTANTE: A variável `DB_HOST` deve ser `database` para funcionar com o Docker pois o nome do container que roda o MySQL é `database`
+- Execute o comando `docker-compose up -d` para subir o ambiente
+- Execute o comando `docker-compose exec app php artisan key:generate` para gerar a chave da aplicação
+- IMPORTANTE: Espere o MySQL subir para executar o próximo comando, aproximadamente 10 minutos
+- Execute o comando `docker-compose exec app php artisan migrate` para criar as tabelas no banco de dados
+- Execute o comando `docker-compose exec app php artisan test` para rodar os testes
